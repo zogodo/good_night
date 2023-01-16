@@ -1,4 +1,4 @@
-package me.zogodo.youtubelite;
+package me.zogodo.androiddemo;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

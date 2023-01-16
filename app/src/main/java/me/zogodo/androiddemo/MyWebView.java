@@ -1,4 +1,4 @@
-package me.zogodo.youtubelite;
+package me.zogodo.androiddemo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

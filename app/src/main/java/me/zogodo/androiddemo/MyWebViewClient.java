@@ -1,4 +1,4 @@
-package me.zogodo.youtubelite;
+package me.zogodo.androiddemo;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;

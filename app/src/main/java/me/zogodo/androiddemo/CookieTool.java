@@ -1,4 +1,4 @@
-package me.zogodo.youtubelite;
+package me.zogodo.androiddemo;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package me.zogodo.youtubelite;
+package me.zogodo.androiddemo;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
