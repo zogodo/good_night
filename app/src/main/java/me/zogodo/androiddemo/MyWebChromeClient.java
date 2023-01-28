@@ -2,7 +2,6 @@ package me.zogodo.androiddemo;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,19 +21,6 @@ public class MyWebChromeClient extends WebChromeClient
         return true;
     }
 
-    @Override
-    public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg)
-    {
-        Log.e("zzz " + view.hashCode(), "onCreateWindow");
-
-        MyWebView new_mywebview = new MyWebView();
-        WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
-        transport.setWebView(new_mywebview);
-        resultMsg.sendToTarget();
-        new_mywebview.loadUrl(MainActivity.indexUrl); //TODO ?
-        return true;
-    }
-
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onShowCustomView(View view, CustomViewCallback callback) {
@@ -50,7 +36,6 @@ public class MyWebChromeClient extends WebChromeClient
 
     @Override
     public void onHideCustomView() {
-        MainActivity.me.setContentView(MyWebView.webview_stack.peek());
         MainActivity.me.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         Window win = MainActivity.me.getWindow();

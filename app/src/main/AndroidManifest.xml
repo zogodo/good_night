@@ -3,8 +3,6 @@
     package="me.zogodo.androiddemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
 
     <application
         android:allowBackup="true"
@@ -37,8 +35,6 @@
                 <data android:scheme="https" android:host="z" />
             </intent-filter>
         </activity>
-        <receiver android:name=".NotificationClickReceiver">
-        </receiver>
     </application>
 
 </manifest>

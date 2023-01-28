@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
-
-import java.util.Stack;
 
 /**
  * Created by zogod on 17/2/19.
@@ -17,47 +14,19 @@ import java.util.Stack;
 public class MyWebView extends AdblockWebView
 {
     //region 共有变量
-    public static Stack<MyWebView> webview_stack = null;
     public static String myJs = null;
     public static String myCss = "";
     //endregion
 
     //region 构造器
-    public MyWebView()
+    public MyWebView(final Context context)
     {
-        super(MainActivity.me);
-        if (MyWebView.webview_stack == null)
-        {
-            MyWebView.webview_stack = new Stack<>();
-            MyWebView.myJs = CookieTool.RawFileToString(MainActivity.me, R.raw.myjs);
-        }
-        MyWebView.webview_stack.push(this);
-        MainActivity.me.setContentView(this);
-        //MainActivity.webView = this;
+        super(context);
         this.WebViewInit();
     }
     public MyWebView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-    }
-    //endregion
-
-    //region goBack
-    public boolean canGoBack()
-    {
-        Log.e("zzz " + this.hashCode(), "canGoBack " + MyWebView.webview_stack.size() + super.canGoBack());
-        return MyWebView.webview_stack.size() > 1 || super.canGoBack();
-    }
-    public void goBack()
-    {
-        Log.e("zzz " + this.hashCode(), "goBack " + MyWebView.webview_stack.size() + super.canGoBack());
-        if (super.canGoBack()) {
-            super.goBack();
-            return;
-        }
-        MyWebView.webview_stack.pop();
-        MyWebView old_mywebview = MyWebView.webview_stack.peek();
-        MainActivity.me.setContentView(old_mywebview);
     }
     //endregion
 
