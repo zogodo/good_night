@@ -19,6 +19,10 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity
 {
+    static {
+        System.loadLibrary("native-lib");
+    }
+
     public static MainActivity me;
     public static String indexUrl = "https://m.youtube.com";
     public static WebView webView = null;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity
             indexUrl = dataString;
         }
         Log.e("zurl", indexUrl, null);
+        Log.e("zzz", stringFromJNI(), null);
 
         webView = new MyWebView();
         webView.loadUrl(indexUrl);
@@ -135,4 +140,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
+    public native String stringFromJNI();
 }
