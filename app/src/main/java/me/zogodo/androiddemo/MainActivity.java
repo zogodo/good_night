@@ -1,12 +1,19 @@
 package me.zogodo.androiddemo;
 
+import android.annotation.TargetApi;
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -37,11 +44,31 @@ public class MainActivity extends AppCompatActivity
             indexUrl = dataString;
         }
         Log.e("zurl", indexUrl, null);
-        Log.e("zzz", stringFromJNI(), null);
+        Log.e("zzzc", stringFromJNI(), null);
+
+        if (!isGrantedUsagePermission(this))
+        {
+            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+        }
+        MyUsage.TestEvent(this);
 
         webView = new MyWebView(this);
         webView.loadUrl(indexUrl);
         this.setContentView(webView);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public static boolean isGrantedUsagePermission(@NonNull Context context) {
+        boolean granted;
+        AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), context.getPackageName());
+
+        if (mode == AppOpsManager.MODE_DEFAULT) {
+            granted = (context.checkCallingOrSelfPermission(android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED);
+        } else {
+            granted = (mode == AppOpsManager.MODE_ALLOWED);
+        }
+        return granted;
     }
 
     @Override
