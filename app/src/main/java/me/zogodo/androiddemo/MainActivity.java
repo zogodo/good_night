@@ -78,12 +78,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void setContentView(View view)
-    {
-        webView = (MyWebView)view;
-        super.setContentView(view);
-    }
-
     public void onBackPressed()
     {
         if (webView != null && webView.canGoBack())
