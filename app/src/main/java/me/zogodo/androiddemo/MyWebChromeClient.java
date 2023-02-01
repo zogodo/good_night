@@ -8,7 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 
 public class MyWebChromeClient extends WebChromeClient
 {
