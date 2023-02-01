@@ -4,10 +4,16 @@
     <title>Android Demo</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body>
+<body ng-app="myApp" ng-controller="myCtrl">
     <h1>Android Demo</h1>
-    <p>Android Demo</p>
+    <p>{{app_name}}</p>
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/angular.min.js"></script>
 </body>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+        $scope.app_name = "Android Demo";
+    });
+</script>
 </html>
