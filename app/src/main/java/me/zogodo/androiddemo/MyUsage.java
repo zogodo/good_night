@@ -15,11 +15,11 @@ public class MyUsage
     public static void TestEvent(Context context)
     {
         long endTime = System.currentTimeMillis();
-        long beginTime = endTime - 1000 * 60 * 10; //最近10分钟
+        long beginTime = endTime - 1000 * 60 * 60 * 24; //最近一天
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         UsageEvents usageEvents = manager.queryEvents(beginTime, endTime);
 
-        //SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
 
         UsageEvents.Event eventOut;
         Log.e("zzze0", "a", null);
@@ -34,6 +34,9 @@ public class MyUsage
                 || t == UsageEvents.Event.KEYGUARD_HIDDEN)        //解锁
             {
                 Log.e("zzze1", ts.toString() + " t = " + eventOut.getEventType(), null);
+                String sql = "insert into event(`time`, `type`) values(?, ?)";
+                Object[] pras = {eventOut.getTimeStamp(), t};
+                db.execSQL(sql, pras);
             }
         }
         Log.e("zzze0", "z", null);

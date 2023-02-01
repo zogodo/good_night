@@ -15,13 +15,13 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "screen_usage.db";
 
     private static final String SQL_CREATE_EVENT =
-            "CREATE TABLE event(`time` datetime PRIMARY KEY, `type` INTEGER);";
+            "CREATE TABLE event(`_id` INTEGER PRIMARY KEY, `time` datetime, `type` INTEGER);";
 
     private static final String SQL_CREATE_INFO =
             "CREATE TABLE info(`key` TEXT PRIMARY KEY, `value` TEXT);";
 
     private static final String SQL_TEST_INSERT =
-            "insert into `event` values(1, 2), (3, 4)";
+            "insert into `event`(`time`, `type`) values(1, 2), (3, 4)";
 
     public FeedReaderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -59,4 +59,5 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
         return events;
     }
+
 }

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         MainActivity.me = this;
+        dbHelper = new FeedReaderDbHelper(this);
 
         Intent intent = getIntent();
         String dataString = intent.getDataString();
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity
         }
         MyUsage.TestEvent(this);
 
-        dbHelper = new FeedReaderDbHelper(this);
         Map<Long, Integer> allEvents = FeedReaderDbHelper.GetAllEvent();
+        Log.e("zzz", "allEvents.size = " + allEvents.size(), null);
 
         webView = new MyWebView(this);
         webView.loadUrl(indexUrl);
