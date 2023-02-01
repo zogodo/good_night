@@ -1,5 +1,8 @@
 package me.zogodo.androiddemo;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -15,6 +18,8 @@ public class MyUsage
         long beginTime = endTime - 1000 * 60 * 10; //最近10分钟
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         UsageEvents usageEvents = manager.queryEvents(beginTime, endTime);
+
+        //SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
 
         UsageEvents.Event eventOut;
         Log.e("zzze0", "a", null);

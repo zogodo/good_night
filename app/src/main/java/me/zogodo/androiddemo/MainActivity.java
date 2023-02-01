@@ -15,16 +15,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
 {
     static {
-        System.loadLibrary("native-lib");
+        //System.loadLibrary("native-lib");
     }
 
     public static MainActivity me;
     public static String indexUrl = "file:///android_asset/web/index.html";
     public static WebView webView = null;
     long exitTime = 0;
+    public static FeedReaderDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,13 +44,16 @@ public class MainActivity extends AppCompatActivity
             indexUrl = dataString;
         }
         Log.e("zurl", indexUrl, null);
-        Log.e("zzzc", stringFromJNI(), null);
+        //Log.e("zzzc", stringFromJNI(), null);
 
         if (!isGrantedUsagePermission(this))
         {
             startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
         MyUsage.TestEvent(this);
+
+        dbHelper = new FeedReaderDbHelper(this);
+        Map<Long, Integer> allEvents = FeedReaderDbHelper.GetAllEvent();
 
         webView = new MyWebView(this);
         webView.loadUrl(indexUrl);
@@ -97,5 +103,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public native String stringFromJNI();
+    //public native String stringFromJNI();
 }
