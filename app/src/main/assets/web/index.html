@@ -7,6 +7,7 @@
 <body ng-app="myApp" ng-controller="myCtrl">
     <h1>Android Demo</h1>
     <p>{{app_name}}</p>
+    <pre>{{events}}</pre>
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/angular.min.js"></script>
 </body>
@@ -14,10 +15,7 @@
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
         $scope.app_name = "Android Demo";
+        $scope.events = window.MyUsage.GetAllEvent();
     });
-    var ji1 = window.MyUsage.GetAllEvent();
-    console.log(ji1);
-    var ji2 = window.MyUsage.TestJavaString();
-    alert(ji2);
 </script>
 </html>

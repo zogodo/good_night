@@ -9,6 +9,8 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import org.json.JSONObject;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,28 +49,24 @@ public class MyUsage
     }
 
     @JavascriptInterface
-    public static Map<Long, Integer> GetAllEvent() {
+    public static String GetAllEvent() {
         SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
         String sql = "select * from event";
         Cursor cursor = db.rawQuery(sql, null);
 
-        Map<Long, Integer> events = new HashMap<>();
+        Map<String, Integer> events = new HashMap<>();
         try {
             while (cursor.moveToNext()) {
                 Map<Date, Integer> event = new HashMap<>();
-                events.put(cursor.getLong(cursor.getColumnIndexOrThrow("time")), cursor.getInt(cursor.getColumnIndexOrThrow("type")));
+                events.put(cursor.getString(cursor.getColumnIndexOrThrow("time")), cursor.getInt(cursor.getColumnIndexOrThrow("type")));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         cursor.close();
 
-        return events;
-    }
-
-    @JavascriptInterface
-    public static String TestJavaString() {
-        return "{OK}";
+        JSONObject json = new JSONObject(events);
+        return json.toString();
     }
 
 }

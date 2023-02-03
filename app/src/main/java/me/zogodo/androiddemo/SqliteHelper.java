@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class SqliteHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "screen_usage.db";
 
     private static final String SQL_CREATE_EVENT =
@@ -17,6 +17,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
     private static final String SQL_TEST_INSERT =
             "insert into `event`(`time`, `type`) values(1, 2), (3, 4)";
+
+    private static final String SQL_DELETE_ALL_EVENT = "delete from event";
+
 
     public SqliteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,6 +32,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.e("zzz", "db onUpgrade()");
+        db.execSQL(SQL_DELETE_ALL_EVENT);
         //升级时改动数据库
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

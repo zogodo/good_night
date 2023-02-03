@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity
         }
         MyUsage.TestEvent(this);
 
-        Map<Long, Integer> allEvents = MyUsage.GetAllEvent();
-        Log.e("zzz", "allEvents.size = " + allEvents.size(), null);
+        String allEvents = MyUsage.GetAllEvent();
+        Log.e("zzz", "allEvents = " + allEvents, null);
 
         webView = new MyWebView(this);
         webView.loadUrl(indexUrl);
