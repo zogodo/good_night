@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     public static String indexUrl = "file:///android_asset/web/index.html";
     public static WebView webView = null;
     long exitTime = 0;
-    public static FeedReaderDbHelper dbHelper;
+    public static SqliteHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         MainActivity.me = this;
-        dbHelper = new FeedReaderDbHelper(this);
+        dbHelper = new SqliteHelper(this);
 
         Intent intent = getIntent();
         String dataString = intent.getDataString();
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         }
         MyUsage.TestEvent(this);
 
-        Map<Long, Integer> allEvents = FeedReaderDbHelper.GetAllEvent();
+        Map<Long, Integer> allEvents = MyUsage.GetAllEvent();
         Log.e("zzz", "allEvents.size = " + allEvents.size(), null);
 
         webView = new MyWebView(this);

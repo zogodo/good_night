@@ -7,8 +7,12 @@ import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyUsage
 {
@@ -41,4 +45,30 @@ public class MyUsage
         }
         Log.e("zzze0", "z", null);
     }
+
+    @JavascriptInterface
+    public static Map<Long, Integer> GetAllEvent() {
+        SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
+        String sql = "select * from event";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        Map<Long, Integer> events = new HashMap<>();
+        try {
+            while (cursor.moveToNext()) {
+                Map<Date, Integer> event = new HashMap<>();
+                events.put(cursor.getLong(cursor.getColumnIndexOrThrow("time")), cursor.getInt(cursor.getColumnIndexOrThrow("type")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        cursor.close();
+
+        return events;
+    }
+
+    @JavascriptInterface
+    public static String TestJavaString() {
+        return "{OK}";
+    }
+
 }
