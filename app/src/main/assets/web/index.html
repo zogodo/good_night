@@ -15,7 +15,10 @@
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
         $scope.app_name = "Android Demo";
-        $scope.events = window.MyUsage.GetAllEvent();
+        var events = window.MyUsage.GetAllEvent();
+        events = JSON.parse(events);
+        events = JSON.stringify(events, null, 4);
+        $scope.events = events;
     });
 </script>
 </html>
