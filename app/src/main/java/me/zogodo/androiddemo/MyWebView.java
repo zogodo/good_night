@@ -56,11 +56,8 @@ public class MyWebView extends AdblockWebView
     @SuppressLint("SetJavaScriptEnabled")
     public void WebViewInit()
     {
-        MyUsage jsInterface = new MyUsage();
         this.getSettings().setJavaScriptEnabled(true);
-        this.addJavascriptInterface(jsInterface, "MyUsage");
-
-        this.getSettings().setJavaScriptEnabled(true);
+        this.addJavascriptInterface(new MyUsage(), "MyUsage");
         this.getSettings().setSupportMultipleWindows(true);
         this.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         this.getSettings().setAllowFileAccess(true);
