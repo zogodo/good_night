@@ -66,7 +66,9 @@ public class MyUsage
         cursor.close();
 
         JSONObject json = new JSONObject(events);
-        return json.toString();
+        String jsonStr = json.toString();
+        Log.e("xx ", "zzzj" + json.toString(), null);
+        return  json.toString();
     }
 
 }
