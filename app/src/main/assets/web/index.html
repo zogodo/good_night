@@ -6,9 +6,11 @@
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
     <h1>Events Demo</h1>
+    <p>{{time_range}}</p>
     <div class="one_day" ng-repeat="day in days">
         <div ng-repeat="evn in day.at(1)"
             style="left:{{evn.left}}%;width:{{evn.width}}%;"
+            ng-click="ShowTimeRange(evn.time_range)"
             ng-attr-title="{{evn.time_range}}"></div>
         <span>{{day[0]}}</span>
         <div style="left:33.33%;width:1px;background:red;"></div>
@@ -49,9 +51,8 @@
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
         return fmt;
     }
-    var debug = false;
     var eventsDb = eventsTest;
-    if (!debug) {
+    if (window.navigator.userAgent.indexOf("Edg") == -1) {
         eventsDb = window.MyUsage.GetAllEvent();
         eventsDb = JSON.parse(eventsDb);
     }
@@ -100,7 +101,12 @@
         }
         // days = {"2022--01-01": [{left: 12.34, width:23.45}, ...], "2022--01-02": ...}
         $scope.days = Object.entries(days);
-        $scope.days.sort()
+        $scope.days.sort();
+        $scope.time_range = "00:00 ~ 00:00";
+        $scope.time_range = window.navigator.userAgent;
+        $scope.ShowTimeRange = function(time_range) {
+            $scope.time_range = time_range;
+        }
     });
 </script>
 </body>
