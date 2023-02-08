@@ -1,14 +1,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Android Demo</title>
+    <title>Events Demo</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
-    <h1>Android Demo</h1>
+    <h1>Events Demo</h1>
     <p>{{app_name}}</p>
     <div class="one_day" ng-repeat="day in days">
-        <div ng-repeat="evn in day.at(1)"></div>
+        <div ng-repeat="evn in day.at(1)" style="left:{{evn.left}}%;width:{{evn.width}}%;"></div>
     </div>
     <pre>{{events}}</pre>
 
@@ -30,7 +30,7 @@
     }
 
     app.controller('myCtrl', function($scope, $http) {
-        $scope.app_name = "Android Demo";
+        $scope.app_name = "Events Demo";
         //var eventsDb = window.MyUsage.GetAllEvent();
         //events = JSON.parse(events);
         //events = JSON.stringify(events, null, 4);
@@ -52,17 +52,23 @@
         for (var key in days) {
             var events = days[key];
             events.sort(compare);
+            if (events[0].type != KEYGUARD_SHOWN) {
+                events.unshift({time:0, type:KEYGUARD_SHOWN})
+            }
+            if (events.at(-1).type != KEYGUARD_HIDDEN) {
+                events.push({time:daySec, type:KEYGUARD_HIDDEN})
+            }
             days[key] = []
             for (var i in events) {
                 if (events[i].type == KEYGUARD_SHOWN) {
                     days[key].push({
                         left: events[i].time/daySec*100,
-                        witdh: 1,
+                        width: events[i].time,
                     })
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
                     div = days[key].at(-1);
-                    div.witdh = (events[i].time - div.left)/daySec*100;
+                    div.width = (events[i].time - div.width)/daySec*100;
                 }
             }
         }
