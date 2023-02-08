@@ -7,7 +7,13 @@
 <body ng-app="myApp" ng-controller="myCtrl">
     <h1>Android Demo</h1>
     <p>{{app_name}}</p>
+    <table>
+        <tr ng-repeat="day in days">
+            <td></td>
+        </tr>
+    </table>
     <pre>{{events}}</pre>
+
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/event.js"></script>
@@ -17,8 +23,19 @@
         $scope.app_name = "Android Demo";
         //var events = window.MyUsage.GetAllEvent();
         //events = JSON.parse(events);
-        events = JSON.stringify(events, null, 4);
-        $scope.events = events;
+        //events = JSON.stringify(events, null, 4);
+        //$scope.events = events;
+        days = {};
+        for (var key in events) {
+            var time = new Date(parseInt(key));
+            var date = time.toDateString() // toDateString() 自带时区
+            var second = time.getSeconds() + 60*(time.getMinutes() + 60*time.getHours());
+            if (days[date] == null) {
+                days[date] = [];
+            }
+            days[date].push([second, events[key]]);
+        }
+        $scope.days = Object.entries(days);
     });
 </script>
 </body>
