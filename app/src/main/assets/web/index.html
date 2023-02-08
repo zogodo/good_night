@@ -10,15 +10,16 @@
     <pre>{{events}}</pre>
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/angular.min.js"></script>
-</body>
+    <script src="js/event.js"></script>
 <script>
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
         $scope.app_name = "Android Demo";
-        var events = window.MyUsage.GetAllEvent();
-        events = JSON.parse(events);
+        //var events = window.MyUsage.GetAllEvent();
+        //events = JSON.parse(events);
         events = JSON.stringify(events, null, 4);
         $scope.events = events;
     });
 </script>
+</body>
 </html>
