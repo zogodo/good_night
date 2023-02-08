@@ -81,7 +81,7 @@
                 events.unshift({time:0, type:KEYGUARD_SHOWN, clock:"00:00"})
             }
             if (events.at(-1).type != KEYGUARD_HIDDEN) {
-                events.push({time:daySec, type:KEYGUARD_HIDDEN})
+                events.push({time:daySec, type:KEYGUARD_HIDDEN, clock:"24:00"})
             }
             days[key] = []
             for (var i in events) {
