@@ -61,7 +61,7 @@
         days = {};
         for (var key in eventsDb) {
             var time = new Date(parseInt(key));
-            var date = time.Format("yyyy-MM-dd");
+            var date = time.Format("yyyy-MM-dd - ") + time.getDay();
             var second = time.getSeconds() + 60*(time.getMinutes() + 60*time.getHours());
             if (days[date] == null) {
                 days[date] = [];
