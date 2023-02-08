@@ -49,8 +49,9 @@
     }
 
     app.controller('myCtrl', function($scope, $http) {
-        //var eventsDb = window.MyUsage.GetAllEvent();
-        //eventsDb = JSON.parse(events);
+        var eventsDb = window.MyUsage.GetAllEvent();
+        eventsDb = JSON.parse(eventsDb);
+        // var eventsDb = eventsTest;
         days = {};
         for (var key in eventsDb) {
             var time = new Date(parseInt(key));

@@ -34,10 +34,10 @@ public class MyUsage
             usageEvents.getNextEvent(eventOut);
             Timestamp ts = new Timestamp(eventOut.getTimeStamp());
             int t = eventOut.getEventType();
-            if (t == UsageEvents.Event.SCREEN_INTERACTIVE         //亮屏
-                || t == UsageEvents.Event.SCREEN_NON_INTERACTIVE  //灭屏
-                || t == UsageEvents.Event.KEYGUARD_SHOWN          //锁屏
-                || t == UsageEvents.Event.KEYGUARD_HIDDEN)        //解锁
+            if (t == UsageEvents.Event.SCREEN_INTERACTIVE         //亮屏15
+                || t == UsageEvents.Event.SCREEN_NON_INTERACTIVE  //灭屏16
+                || t == UsageEvents.Event.KEYGUARD_SHOWN          //锁屏17
+                || t == UsageEvents.Event.KEYGUARD_HIDDEN)        //解锁18
             {
                 Log.e("zzze1", ts.toString() + " t = " + eventOut.getEventType(), null);
                 String sql = "insert into event(`time`, `type`) values(?, ?)";
