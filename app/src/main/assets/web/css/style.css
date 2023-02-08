@@ -19,6 +19,9 @@ p {
     width: 10%;
     background-color: lightgray;
 }
+.one_day div:hover {
+    background-color: gray;
+}
 .one_day span {
     position: absolute;
 }

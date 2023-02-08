@@ -7,9 +7,11 @@
 <body ng-app="myApp" ng-controller="myCtrl">
     <h1>Events Demo</h1>
     <div class="one_day" ng-repeat="day in days">
-        <div ng-repeat="evn in day.at(1)" style="left:{{evn.left}}%;width:{{evn.width}}%;"></div>
+        <div ng-repeat="evn in day.at(1)"
+            style="left:{{evn.left}}%;width:{{evn.width}}%;"
+            ng-attr-title="{{evn.time_range}}"></div>
         <span>{{day[0]}}</span>
-        <div style="left:25%;width:1px;background:red;"></div>
+        <div style="left:33.33%;width:1px;background:red;"></div>
     </div>
 
     <script src="js/jquery-3.0.0.min.js"></script>
@@ -47,11 +49,14 @@
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
         return fmt;
     }
+    var debug = false;
+    var eventsDb = eventsTest;
+    if (!debug) {
+        eventsDb = window.MyUsage.GetAllEvent();
+        eventsDb = JSON.parse(eventsDb);
+    }
 
     app.controller('myCtrl', function($scope, $http) {
-        var eventsDb = window.MyUsage.GetAllEvent();
-        eventsDb = JSON.parse(eventsDb);
-        // var eventsDb = eventsTest;
         days = {};
         for (var key in eventsDb) {
             var time = new Date(parseInt(key));
@@ -63,6 +68,7 @@
             days[date].push({
                 time: second,
                 type: eventsDb[key],
+                clock: time.Format("hh:mm")
             });
         }
         // days = {"2022--01-01": [{time: 123, type:17}, ...], "2022--01-02": ...}
@@ -71,7 +77,7 @@
             var events = days[key];
             events.sort(compare);
             if (events[0].type != KEYGUARD_SHOWN) {
-                events.unshift({time:0, type:KEYGUARD_SHOWN})
+                events.unshift({time:0, type:KEYGUARD_SHOWN, clock:"00:00"})
             }
             if (events.at(-1).type != KEYGUARD_HIDDEN) {
                 events.push({time:daySec, type:KEYGUARD_HIDDEN})
@@ -82,11 +88,13 @@
                     days[key].push({
                         left: events[i].time/daySec*100,
                         width: events[i].time,
+                        time_range: events[i].clock + " ~ ",
                     })
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
                     div = days[key].at(-1);
                     div.width = (events[i].time - div.width)/daySec*100;
+                    div.time_range += events[i].clock;
                 }
             }
         }
