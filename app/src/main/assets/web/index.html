@@ -7,11 +7,9 @@
 <body ng-app="myApp" ng-controller="myCtrl">
     <h1>Android Demo</h1>
     <p>{{app_name}}</p>
-    <table>
-        <tr ng-repeat="day in days">
-            <td></td>
-        </tr>
-    </table>
+    <div class="one_day" ng-repeat="day in days">
+        <div ng-repeat="evn in day.at(1)"></div>
+    </div>
     <pre>{{events}}</pre>
 
     <script src="js/jquery-3.0.0.min.js"></script>

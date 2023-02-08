@@ -4,3 +4,19 @@ body {
 p {
     color: red;
 }
+.one_day {
+    width: 100%;
+    border: #000 solid 1px;
+    position: relative;
+    height: 20px;
+    margin-bottom: 10px;
+}
+.one_day div {
+    /* display: contents; */
+    position: absolute;
+    /* float: left; */
+    left: 50%;
+    height: 100%;
+    width: 10%;
+    background-color: aqua;
+}
