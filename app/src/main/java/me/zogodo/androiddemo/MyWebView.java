@@ -5,13 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-
-import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
+import android.webkit.WebView;
 
 /**
  * Created by zogod on 17/2/19.
  */
-public class MyWebView extends AdblockWebView
+public class MyWebView extends WebView
 {
     //region 共有变量
     public static String myJs = null;
