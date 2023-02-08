@@ -16,22 +16,45 @@
     <script src="js/angular.min.js"></script>
     <script src="js/event.js"></script>
 <script>
+    var KEYGUARD_SHOWN = 17;
+    var KEYGUARD_HIDDEN = 18;
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
         $scope.app_name = "Android Demo";
-        //var events = window.MyUsage.GetAllEvent();
+        //var eventsDb = window.MyUsage.GetAllEvent();
         //events = JSON.parse(events);
         //events = JSON.stringify(events, null, 4);
         //$scope.events = events;
         days = {};
-        for (var key in events) {
+        for (var key in eventsDb) {
             var time = new Date(parseInt(key));
             var date = time.toDateString() // toDateString() 自带时区
             var second = time.getSeconds() + 60*(time.getMinutes() + 60*time.getHours());
             if (days[date] == null) {
                 days[date] = [];
             }
-            days[date].push([second, events[key]]);
+            days[date].push({
+                time: second,
+                type: eventsDb[key],
+            });
+        }
+        var daySec = 24*60*60;
+        for (var key in days) {
+            var events = days[key];
+            //sort events
+            days[key] = []
+            for (var i in events) {
+                if (events[i].type == KEYGUARD_SHOWN) {
+                    days[key].push({
+                        left: events[i].time/daySec*100,
+                        witdh: 1,
+                    })
+                }
+                if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
+                    div = days[key].at(-1);
+                    div.witdh = (events[i].time - div.left)/daySec*100;
+                }
+            }
         }
         $scope.days = Object.entries(days);
     });
