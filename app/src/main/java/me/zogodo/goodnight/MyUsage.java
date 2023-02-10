@@ -19,9 +19,8 @@ public class MyUsage
 {
     public static void TestEvent(Context context)
     {
+        long beginTime = 0; //最近一天
         long endTime = System.currentTimeMillis();
-        long beginTime = endTime - 1000 * 60 * 60 * 24; //最近一天
-        beginTime = 0;
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         UsageEvents usageEvents = manager.queryEvents(beginTime, endTime);
 
@@ -34,15 +33,19 @@ public class MyUsage
             usageEvents.getNextEvent(eventOut);
             Timestamp ts = new Timestamp(eventOut.getTimeStamp());
             int t = eventOut.getEventType();
-            if (t == UsageEvents.Event.SCREEN_INTERACTIVE         //亮屏15
-                || t == UsageEvents.Event.SCREEN_NON_INTERACTIVE  //灭屏16
-                || t == UsageEvents.Event.KEYGUARD_SHOWN          //锁屏17
+            //t == UsageEvents.Event.SCREEN_INTERACTIVE           //亮屏15
+            //t == UsageEvents.Event.SCREEN_NON_INTERACTIVE       //灭屏16
+            if (t == UsageEvents.Event.KEYGUARD_SHOWN             //锁屏17
                 || t == UsageEvents.Event.KEYGUARD_HIDDEN)        //解锁18
             {
                 Log.e("zzze1", ts.toString() + " t = " + eventOut.getEventType(), null);
-                String sql = "insert into event(`time`, `type`) values(?, ?)";
-                Object[] pras = {eventOut.getTimeStamp(), t};
-                db.execSQL(sql, pras);
+                String sql = "select * from `event` where `time`=?";
+                String[] pras = { Long.valueOf(eventOut.getTimeStamp()).toString() };
+                if (!SqliteHelper.Exist(db, sql, pras)) {
+                    sql = "insert into event(`time`, `type`) values(?, ?)";
+                    Object[] pras2 = new Object[]{eventOut.getTimeStamp(), t};
+                    db.execSQL(sql, pras2);
+                }
             }
         }
         Log.e("zzze0", "z", null);
