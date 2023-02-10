@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity
         }
         MyUsage.TestEvent(this);
 
-        String allEvents = MyUsage.GetAllEvent();
-        Log.e("zzz", "allEvents = " + allEvents, null);
+        //String allEvents = MyUsage.GetAllEvent();
+        //Log.e("zzz", "allEvents = " + allEvents, null);
 
         webView = new MyWebView(this);
         webView.loadUrl(indexUrl);

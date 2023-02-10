@@ -12,7 +12,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_EVENT =
             "CREATE TABLE event(`time` datetime PRIMARY KEY, `type` INTEGER);";
-            //"CREATE TABLE event(`_id` INTEGER PRIMARY KEY, `time` datetime, `type` INTEGER);";
 
     private static final String SQL_CREATE_INFO =
             "CREATE TABLE info(`key` TEXT PRIMARY KEY, `value` TEXT);";

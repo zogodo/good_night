@@ -38,7 +38,7 @@ public class MyUsage
             if (t == UsageEvents.Event.KEYGUARD_SHOWN             //锁屏17
                 || t == UsageEvents.Event.KEYGUARD_HIDDEN)        //解锁18
             {
-                Log.e("zzze1", ts.toString() + " t = " + eventOut.getEventType(), null);
+                //Log.e("zzze1", ts.toString() + " t = " + eventOut.getEventType(), null);
                 String sql = "select * from `event` where `time`=?";
                 String[] pras = { Long.valueOf(eventOut.getTimeStamp()).toString() };
                 if (!SqliteHelper.Exist(db, sql, pras)) {
