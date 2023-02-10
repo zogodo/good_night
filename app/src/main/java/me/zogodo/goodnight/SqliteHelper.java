@@ -1,4 +1,4 @@
-package me.zogodo.androiddemo;
+package me.zogodo.goodnight;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,16 +10,10 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "screen_usage.db";
 
     private static final String SQL_CREATE_EVENT =
-            "CREATE TABLE event(`_id` INTEGER PRIMARY KEY, `time` datetime, `type` INTEGER);";
+            "CREATE TABLE event(`time` datetime PRIMARY KEY, `type` INTEGER);";
 
     private static final String SQL_CREATE_INFO =
             "CREATE TABLE info(`key` TEXT PRIMARY KEY, `value` TEXT);";
-
-    private static final String SQL_TEST_INSERT =
-            "insert into `event`(`time`, `type`) values(1, 2), (3, 4)";
-
-    private static final String SQL_DELETE_ALL_EVENT = "delete from event";
-
 
     public SqliteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,11 +22,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
         Log.e("zzz", "db onCreate()");
         db.execSQL(SQL_CREATE_EVENT);
         db.execSQL(SQL_CREATE_INFO);
-        db.execSQL(SQL_TEST_INSERT);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.e("zzz", "db onUpgrade()");
-        db.execSQL(SQL_DELETE_ALL_EVENT);
         //升级时改动数据库
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

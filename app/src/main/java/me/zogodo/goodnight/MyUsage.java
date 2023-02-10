@@ -1,4 +1,4 @@
-package me.zogodo.androiddemo;
+package me.zogodo.goodnight;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,7 +12,6 @@ import android.webkit.JavascriptInterface;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public class MyUsage
     {
         long endTime = System.currentTimeMillis();
         long beginTime = endTime - 1000 * 60 * 60 * 24; //最近一天
+        beginTime = 0;
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         UsageEvents usageEvents = manager.queryEvents(beginTime, endTime);
 
@@ -57,8 +57,9 @@ public class MyUsage
         Map<String, Integer> events = new HashMap<>();
         try {
             while (cursor.moveToNext()) {
-                Map<Date, Integer> event = new HashMap<>();
-                events.put(cursor.getString(cursor.getColumnIndexOrThrow("time")), cursor.getInt(cursor.getColumnIndexOrThrow("type")));
+                String time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
+                int type = cursor.getInt(cursor.getColumnIndexOrThrow("type"));
+                events.put(time, type);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,9 +67,8 @@ public class MyUsage
         cursor.close();
 
         JSONObject json = new JSONObject(events);
-        String jsonStr = json.toString();
-        Log.e("xx ", "zzzj" + json.toString(), null);
-        return  json.toString();
+        // Log.e("xx ", "zzzj" + json.toString(), null);
+        return json.toString();
     }
 
 }

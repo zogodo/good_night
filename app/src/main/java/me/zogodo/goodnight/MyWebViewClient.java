@@ -1,4 +1,4 @@
-package me.zogodo.androiddemo;
+package me.zogodo.goodnight;
 
 import android.annotation.TargetApi;
 import android.os.Build;

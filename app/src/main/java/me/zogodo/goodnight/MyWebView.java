@@ -1,4 +1,4 @@
-package me.zogodo.androiddemo;
+package me.zogodo.goodnight;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
