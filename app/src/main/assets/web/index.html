@@ -67,12 +67,12 @@
                 days[date] = [];
             }
             days[date].push({
-                time: second,
-                type: eventsDb[key],
-                clock: time.Format("hh:mm")
+                time: second,                //当天的秒数
+                type: eventsDb[key],         //事件类型 (17 or 18)
+                clock: time.Format("hh:mm")  //小时和分钟
             });
         }
-        // days = {"2022--01-01": [{time: 123, type:17}, ...], "2022--01-02": ...}
+        // days = {"2022-01-01": [{time: 123, type:17}, ...], "2022-01-02": ...}
         var daySec = 24*60*60;
         for (var key in days) {
             var events = days[key];
@@ -86,10 +86,13 @@
             days[key] = []
             for (var i in events) {
                 if (events[i].type == KEYGUARD_SHOWN) {
+                    if (days[key].length > 1 && days[key].at(-1).width > 1) {
+                        continue;
+                    }
                     days[key].push({
-                        left: events[i].time/daySec*100,
-                        width: events[i].time,
-                        time_range: events[i].clock + " ~ ",
+                        left: events[i].time/daySec*100,      //左边开始的位置
+                        width: events[i].time,                //div宽度
+                        time_range: events[i].clock + " ~ ",  //时间范围
                     })
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
@@ -99,8 +102,9 @@
                 }
             }
         }
-        // days = {"2022--01-01": [{left: 12.34, width:23.45}, ...], "2022--01-02": ...}
+        // days = {"2022-01-01": [{left: 12.34, width:23.45}, ...], "2022-01-02": ...}
         $scope.days = Object.entries(days);
+        // $scope.days = [ ["2022-01-01", [{left: 12.34, width:23.45}, ...] ], [ "2022-01-02", [...] ] ...}
         $scope.days.sort();
         $scope.time_range = "00:00 ~ 00:00";
         $scope.time_range = window.navigator.userAgent;
