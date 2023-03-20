@@ -86,18 +86,15 @@
             days[key] = []
             for (var i in events) {
                 if (events[i].type == KEYGUARD_SHOWN) {
-                    if (days[key].length > 1 && days[key].at(-1).width > 1) {
-                        continue;
-                    }
                     days[key].push({
                         left: events[i].time/daySec*100,      //左边开始的位置
-                        width: events[i].time,                //div宽度
+                        start: events[i].time,                //div宽度开始位置
                         time_range: events[i].clock + " ~ ",  //时间范围
                     })
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
                     div = days[key].at(-1);
-                    div.width = (events[i].time - div.width)/daySec*100;
+                    div.width = (events[i].time - div.start)/daySec*100;
                     div.time_range += events[i].clock;
                 }
             }
