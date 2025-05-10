@@ -20,6 +20,7 @@
     <script src="js/angular.min.js"></script>
     <script src="js/event.js"></script>
 <script>
+    var weekday_zh = ["日", "一", "二", "三", "四", "五", "六"];
     var KEYGUARD_SHOWN = 17;
     var KEYGUARD_HIDDEN = 18;
     var app = angular.module('myApp', []);
@@ -61,7 +62,7 @@
         days = {};
         for (var key in eventsDb) {
             var time = new Date(parseInt(key));
-            var date = time.Format("yyyy-MM-dd - ") + time.getDay();
+            var date = time.Format("yyyy-MM-dd（") + weekday_zh[time.getDay()] + "）";
             var second = time.getSeconds() + 60*(time.getMinutes() + 60*time.getHours());
             if (days[date] == null) {
                 days[date] = [];
@@ -103,8 +104,8 @@
         $scope.days = Object.entries(days);
         // $scope.days = [ ["2022-01-01", [{left: 12.34, width:23.45}, ...] ], [ "2022-01-02", [...] ] ...}
         $scope.days.sort();
-        $scope.time_range = "00:00 ~ 00:00";
-        $scope.time_range = window.navigator.userAgent;
+        $scope.time_range = "点击灰色区域显示时间范围";
+        alert("\n浏览器类型：\n\n" + window.navigator.userAgent);
         $scope.ShowTimeRange = function(time_range) {
             $scope.time_range = time_range;
         }

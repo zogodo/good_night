@@ -54,8 +54,12 @@ public class MyUsage
     @JavascriptInterface
     public static String GetAllEvent() {
         SQLiteDatabase db = MainActivity.dbHelper.getWritableDatabase();
-        String sql = "select * from event";
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select * from event where `time`>=?";
+        long now = System.currentTimeMillis();
+        long day_ms = 24*60*60*1000;
+        long day_ms_21day = (now / day_ms - 21) * day_ms;
+        String[] pras = { Long.valueOf(day_ms_21day).toString() };
+        Cursor cursor = db.rawQuery(sql, pras);
 
         Map<String, Integer> events = new HashMap<>();
         try {
