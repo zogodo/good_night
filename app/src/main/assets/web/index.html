@@ -28,10 +28,10 @@
     var KEYGUARD_HIDDEN = 18; //解锁
     var app = angular.module('myApp', []);
     function compare(a, b) {
-        if (a.time < b.time) {
+        if (a.sec_of_day < b.sec_of_day) {
             return -1;
         }
-        if (a.time > b.time) {
+        if (a.sec_of_day > b.sec_of_day) {
             return 1;
         }
         return 0;
@@ -71,12 +71,12 @@
                 days[date] = [];
             }
             days[date].push({
-                time: second,                //当天的秒数
+                sec_of_day: second,          //当天的秒数
                 type: eventsDb[key],         //事件类型 (17 or 18)
                 clock: time.Format("hh:mm")  //小时和分钟
             });
         }
-        // days = {"2022-01-01": [{time: 123, type:17}, ...], "2022-01-02": ...}
+        // days = {"2022-01-01": [{sec_of_day: 123, type:17}, ...], "2022-01-02": ...}
         var daySec = 24*60*60;
         for (var key in days) {
             var events = days[key];
@@ -84,11 +84,11 @@
             // 锁屏-->解锁  做一个灰色<div>
             if (events[0].type != KEYGUARD_SHOWN) {
                 //一天最开始必须是锁屏
-                events.unshift({time:0, type:KEYGUARD_SHOWN, clock:"00:00"})
+                events.unshift({sec_of_day:0, type:KEYGUARD_SHOWN, clock:"00:00"})
             }
             if (events.at(-1).type != KEYGUARD_HIDDEN) {
                 //一天最后必须是解锁
-                events.push({time:daySec, type:KEYGUARD_HIDDEN, clock:"24:00"})
+                events.push({sec_of_day:daySec, type:KEYGUARD_HIDDEN, clock:"24:00"})
             }
             days[key] = []
             var one_div_ok = true;
@@ -96,16 +96,16 @@
                 if (events[i].type == KEYGUARD_SHOWN) {
                     if (!one_div_ok) continue; //连续多个锁屏事件
                     days[key].push({
-                        left: events[i].time/daySec*100,      //左边开始的位置
-                        start: events[i].time,                //div宽度开始位置
-                        time_range: events[i].clock + " ~ ",  //时间范围
+                        left: events[i].sec_of_day/daySec*100, //div左边位置百分比
+                        start_sec: events[i].sec_of_day,       //记录一下div开始的秒数,用于计算宽度
+                        time_range: events[i].clock + " ~ ",   //时间范围
                     })
                     one_div_ok = false;
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
                     //应该不会出现连续多个解锁事件
                     div = days[key].at(-1);
-                    div.width = (events[i].time - div.start)/daySec*100;
+                    div.width = (events[i].sec_of_day - div.start_sec)/daySec*100;
                     div.time_range += events[i].clock;
                     one_div_ok = true;
                 }
