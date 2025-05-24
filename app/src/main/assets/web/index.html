@@ -103,7 +103,7 @@
                     one_div_ok = false;
                 }
                 if (days[key].length > 0 && events[i].type == KEYGUARD_HIDDEN) {
-                    //应该不会出现连续多个解锁事件
+                    if (one_div_ok) continue; //连续多个解锁事件
                     div = days[key].at(-1);
                     div.width = (events[i].sec_of_day - div.start_sec)/daySec*100;
                     div.time_range += events[i].clock;
