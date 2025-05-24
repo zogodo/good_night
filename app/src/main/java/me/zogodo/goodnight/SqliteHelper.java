@@ -13,9 +13,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_EVENT =
             "CREATE TABLE event(`time` datetime PRIMARY KEY, `type` INTEGER);";
 
-    private static final String SQL_CREATE_INFO =
-            "CREATE TABLE info(`key` TEXT PRIMARY KEY, `value` TEXT);";
-
     public SqliteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,7 +32,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.e("zzz", "db onCreate()");
         db.execSQL(SQL_CREATE_EVENT);
-        db.execSQL(SQL_CREATE_INFO);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.e("zzz", "db onUpgrade()");
